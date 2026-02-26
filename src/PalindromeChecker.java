@@ -1,28 +1,20 @@
 import java.util.Stack;
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 public class PalindromeChecker {
 
     public static void main(String[] args) {
 
-        // UC1
         displayWelcomeMessage();
-
-        // UC2
-        checkHardcodedPalindrome();
-
-        // UC3
-        checkPalindromeUsingLoop();
-
-        // UC4
-        checkPalindromeUsingCharArray();
-
-        // UC5
-        checkPalindromeUsingStack();
-
-        // UC6
-        checkPalindromeUsingQueueAndStack();
+        checkHardcodedPalindrome();              // UC2
+        checkPalindromeUsingLoop();              // UC3
+        checkPalindromeUsingCharArray();         // UC4
+        checkPalindromeUsingStack();             // UC5
+        checkPalindromeUsingQueueAndStack();     // UC6
+        checkPalindromeUsingDeque();             // UC7
     }
 
     // =========================
@@ -41,11 +33,10 @@ public class PalindromeChecker {
         String word = "madam";
         String reversed = new StringBuilder(word).reverse().toString();
 
-        if (word.equals(reversed)) {
+        if (word.equals(reversed))
             System.out.println("UC2: " + word + " is a Palindrome");
-        } else {
+        else
             System.out.println("UC2: " + word + " is NOT a Palindrome");
-        }
     }
 
     // =========================
@@ -60,11 +51,10 @@ public class PalindromeChecker {
             reversed = reversed + original.charAt(i);
         }
 
-        if (original.equals(reversed)) {
+        if (original.equals(reversed))
             System.out.println("UC3: " + original + " is a Palindrome");
-        } else {
+        else
             System.out.println("UC3: " + original + " is NOT a Palindrome");
-        }
     }
 
     // =========================
@@ -77,25 +67,21 @@ public class PalindromeChecker {
 
         int start = 0;
         int end = characters.length - 1;
-
         boolean isPalindrome = true;
 
         while (start < end) {
-
             if (characters[start] != characters[end]) {
                 isPalindrome = false;
                 break;
             }
-
             start++;
             end--;
         }
 
-        if (isPalindrome) {
+        if (isPalindrome)
             System.out.println("UC4: " + input + " is a Palindrome");
-        } else {
+        else
             System.out.println("UC4: " + input + " is NOT a Palindrome");
-        }
     }
 
     // =========================
@@ -119,46 +105,72 @@ public class PalindromeChecker {
             }
         }
 
-        if (isPalindrome) {
+        if (isPalindrome)
             System.out.println("UC5: " + input + " is a Palindrome");
-        } else {
+        else
             System.out.println("UC5: " + input + " is NOT a Palindrome");
-        }
     }
 
     // =========================
-    // UC6 - Queue + Stack Based
+    // UC6 - Queue + Stack
     // =========================
     public static void checkPalindromeUsingQueueAndStack() {
 
         String input = "madam";
-
         Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
         for (int i = 0; i < input.length(); i++) {
             char ch = input.charAt(i);
-            queue.add(ch);    // FIFO
-            stack.push(ch);   // LIFO
+            queue.add(ch);
+            stack.push(ch);
         }
 
         boolean isPalindrome = true;
 
         while (!queue.isEmpty()) {
-
-            char fromQueue = queue.remove();  // Dequeue
-            char fromStack = stack.pop();     // Pop
-
-            if (fromQueue != fromStack) {
+            if (queue.remove() != stack.pop()) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        if (isPalindrome) {
+        if (isPalindrome)
             System.out.println("UC6: " + input + " is a Palindrome");
-        } else {
+        else
             System.out.println("UC6: " + input + " is NOT a Palindrome");
+    }
+
+    // =========================
+    // UC7 - Deque Based Optimized
+    // =========================
+    public static void checkPalindromeUsingDeque() {
+
+        String input = "rotator";
+        Deque<Character> deque = new ArrayDeque<>();
+
+        // Insert characters into deque
+        for (int i = 0; i < input.length(); i++) {
+            deque.addLast(input.charAt(i));
         }
+
+        boolean isPalindrome = true;
+
+        // Compare front and rear
+        while (deque.size() > 1) {
+
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
+
+            if (front != rear) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        if (isPalindrome)
+            System.out.println("UC7: " + input + " is a Palindrome");
+        else
+            System.out.println("UC7: " + input + " is NOT a Palindrome");
     }
 }
