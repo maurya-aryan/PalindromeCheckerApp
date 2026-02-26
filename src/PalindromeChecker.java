@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 public class PalindromeChecker {
 
     public static void main(String[] args) {
@@ -13,6 +15,9 @@ public class PalindromeChecker {
 
         // UC4
         checkPalindromeUsingCharArray();
+
+        // UC5
+        checkPalindromeUsingStack();
     }
 
     // =========================
@@ -24,7 +29,7 @@ public class PalindromeChecker {
     }
 
     // =========================
-    // UC2 - Hardcoded Palindrome (StringBuilder)
+    // UC2 - Using StringBuilder
     // =========================
     public static void checkHardcodedPalindrome() {
 
@@ -85,6 +90,37 @@ public class PalindromeChecker {
             System.out.println("UC4: " + input + " is a Palindrome");
         } else {
             System.out.println("UC4: " + input + " is NOT a Palindrome");
+        }
+    }
+
+    // =========================
+    // UC5 - Stack Based Palindrome
+    // =========================
+    public static void checkPalindromeUsingStack() {
+
+        String input = "refer";
+
+        Stack<Character> stack = new Stack<>();
+
+        // Push characters into stack
+        for (int i = 0; i < input.length(); i++) {
+            stack.push(input.charAt(i));
+        }
+
+        boolean isPalindrome = true;
+
+        // Pop and compare
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) != stack.pop()) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        if (isPalindrome) {
+            System.out.println("UC5: " + input + " is a Palindrome");
+        } else {
+            System.out.println("UC5: " + input + " is NOT a Palindrome");
         }
     }
 }
