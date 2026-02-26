@@ -1,4 +1,6 @@
 import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class PalindromeChecker {
 
@@ -18,6 +20,9 @@ public class PalindromeChecker {
 
         // UC5
         checkPalindromeUsingStack();
+
+        // UC6
+        checkPalindromeUsingQueueAndStack();
     }
 
     // =========================
@@ -29,7 +34,7 @@ public class PalindromeChecker {
     }
 
     // =========================
-    // UC2 - Using StringBuilder
+    // UC2 - StringBuilder Reverse
     // =========================
     public static void checkHardcodedPalindrome() {
 
@@ -94,22 +99,19 @@ public class PalindromeChecker {
     }
 
     // =========================
-    // UC5 - Stack Based Palindrome
+    // UC5 - Stack Based
     // =========================
     public static void checkPalindromeUsingStack() {
 
         String input = "refer";
-
         Stack<Character> stack = new Stack<>();
 
-        // Push characters into stack
         for (int i = 0; i < input.length(); i++) {
             stack.push(input.charAt(i));
         }
 
         boolean isPalindrome = true;
 
-        // Pop and compare
         for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) != stack.pop()) {
                 isPalindrome = false;
@@ -121,6 +123,42 @@ public class PalindromeChecker {
             System.out.println("UC5: " + input + " is a Palindrome");
         } else {
             System.out.println("UC5: " + input + " is NOT a Palindrome");
+        }
+    }
+
+    // =========================
+    // UC6 - Queue + Stack Based
+    // =========================
+    public static void checkPalindromeUsingQueueAndStack() {
+
+        String input = "madam";
+
+        Queue<Character> queue = new LinkedList<>();
+        Stack<Character> stack = new Stack<>();
+
+        for (int i = 0; i < input.length(); i++) {
+            char ch = input.charAt(i);
+            queue.add(ch);    // FIFO
+            stack.push(ch);   // LIFO
+        }
+
+        boolean isPalindrome = true;
+
+        while (!queue.isEmpty()) {
+
+            char fromQueue = queue.remove();  // Dequeue
+            char fromStack = stack.pop();     // Pop
+
+            if (fromQueue != fromStack) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        if (isPalindrome) {
+            System.out.println("UC6: " + input + " is a Palindrome");
+        } else {
+            System.out.println("UC6: " + input + " is NOT a Palindrome");
         }
     }
 }
